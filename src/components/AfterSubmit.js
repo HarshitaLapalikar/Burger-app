@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
  class AfterSubmit extends Component {
     constructor(props) {
@@ -18,8 +19,8 @@ import React, { Component } from 'react'
         return (
             <div>
               
-                <h1> Your Order is {this.props.location.state.totalAmount} </h1>
-                    
+                <h1> Your Burger is of Rs.{this.props.location.state.totalAmount} </h1>
+                    <Link to='/userinfo'>Confirm Order</Link>
             </div>
         )
     }

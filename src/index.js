@@ -6,6 +6,8 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import AfterSubmit from './components/AfterSubmit';
 import Order from './Order/Order';
+import { userInfo } from 'os';
+import UserInfo from './UserInfo/UserInfo';
 
 
 ReactDOM.render((
@@ -15,6 +17,7 @@ ReactDOM.render((
        <Route exact path="/" component={App}/>
         <Route path="/submit" component={AfterSubmit}/>
         <Route path="/order" component={Order}/>
+        <Route path='/userinfo' component={UserInfo}/>
        </Switch>
           
     </div>

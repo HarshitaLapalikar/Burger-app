@@ -14,7 +14,9 @@ class App extends Component  {
             totalAmount: 0, 
             Salad_Price: 3,
           Cheese_Price: 4,
-          Bacon_Price: 5
+          Bacon_Price: 5,
+          isButtonPressed : false
+
         }
     }
              // handleChange = (e) => {
@@ -46,7 +48,9 @@ class App extends Component  {
               // this.setState({
               //   total:(parseInt(Salad)+parseInt(Cheese)+parseInt(Bacon))
               // })
-
+              this.setState(() => ({
+                isButtonPressed: true
+              }))
               this.setState({total : this.state.Salad+this.state.Cheese+this.state.Bacon});
              let  total= (parseInt(this.state.Salad*this.state.Salad_Price)+
                           parseInt(this.state.Cheese*this.state.Cheese_Price)+
@@ -64,14 +68,16 @@ class App extends Component  {
             //   console.log(this.state)
             // }
           
-
+linkClick = () => {
+  
+}
 
     render() {
         return (
             
             <div>
               <h1>Hey !! Make your Burger Here</h1> <br/> 
-              <h2>Please add Ingredients</h2>
+              <h2>Add Ingredients</h2>
             <form>
              <div>
               <label>Salad :</label>
@@ -85,13 +91,22 @@ class App extends Component  {
               <label>Bacon:</label>
               <input  type="number"  onChange={(e) => this.handleBacon(e)}     />
             </div>
-            
-            <Link to ={
-             { pathname:'/submit', state: {totalAmount : this.state.totalAmount}} }>
-             <button className='SubmitForm' type='submit' >Submit</button>
-             </Link>
+            <br/>
+            <div>
+              <h3> Please Submit your Ingredients before Proceed  </h3>
+            </div> <br/>
+            <button type="submit" onClick={this.addAction} value={this.state.total}>Submit Ingredients</button>
+            {
+
+              <Link  to ={
+                { pathname:'/submit', state: {totalAmount : this.state.totalAmount}} }>
+                  Proceed
+                {/* <button className='SubmitForm' type='submit' >Proceed</button> */}
+                </Link>
+            }
+
               
-              <button type="submit" onClick={this.addAction} value={this.state.total}>Order</button>
+              
                
                
                 {/* { <NavLink to='/submit' > 
