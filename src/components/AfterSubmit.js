@@ -1,28 +1,34 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+//import { get } from 'https';
 
  class AfterSubmit extends Component {
-    constructor(props) {
-        super(props)
-    this.state = {
-            amount: 0                                                           //ye props ko access kiya h jo last file se send kiye h 
-        
-        }
-    }
-         
- componentDidMount() 
- {
- console.log(this.props)
- }
-    
+
     render () {
         return (
             <div>
+                    <h2> List of Items you order -</h2>
+                    <p>salad: {this.props.ingredient.value.salad }</p>
+                
+                      <p>bacon: {this.props.ingredient.value.bacon} </p>
+                
+                     <p>cheese: {this.props.ingredient.value.cheese} </p> 
+                       
+                       
               
-                <h1> Your Burger is of Rs.{this.props.location.state.totalAmount} </h1>
+                <h1> Your Burger is of Rs.{this.props.ingredient.value.totalAmount} </h1>
                     <Link to='/userinfo'>Confirm Order</Link>
             </div>
         )
     }
 }
-export default AfterSubmit;
+        const mapStateToProps = (state) => {
+            console.log(state, "state");
+            return{
+                    ingredient: state.ingredient
+            };
+
+        };
+
+export default connect (mapStateToProps,null)(AfterSubmit);

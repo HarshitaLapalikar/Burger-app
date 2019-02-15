@@ -1,80 +1,55 @@
 import React, { Component } from 'react'
-import AfterSubmit from './components/AfterSubmit';
-import Order from './Order/Order';
-import { Link , NavLink } from 'react-router-dom'
+import { connect } from 'react-redux';
+import {add_ingredients} from './Redux/action'
+import { Link } from 'react-router-dom';
 
 
 class App extends Component  {
-    constructor(props) {
-        super(props);
-        this.state = {
-           Salad: 0, 
-            Cheese: 0,
-            Bacon: 0,
+    state = {
+           salad: 0, 
+            cheese: 0,
+            bacon: 0,
             totalAmount: 0, 
             Salad_Price: 3,
-          Cheese_Price: 4,
-          Bacon_Price: 5,
-          isButtonPressed : false
-
-        }
+            Cheese_Price: 4,
+            Bacon_Price: 5,
     }
-             // handleChange = (e) => {
-        //   let ing1 = this.refs.i1.value*5;
-        //   let ing2 = this.refs.i2.value*7;
-        //   let ing3 = this.refs.i3.value*9;
-        //   let ing4 = this.refs.i4.value*8;
-        //   let total = ing1+ing2+ing3+ing4;
-        //   this.setState(() => ({totalAmount: total}))
-        //   let change  = ({[e.target.name] : e.target.value});
-        // }
 
             handleSalad = (e)=> {
               console.log(e.target.value);
-              this.setState({Salad: e.target.value});
+              this.setState({salad: e.target.value});
             }    
 
             handleCheese = (e) => {
-              this.setState({Cheese: e.target.value});
+              this.setState({cheese: e.target.value});
             }
 
             handleBacon = (e) => {
-              this.setState({Bacon: e.target.value});
+              this.setState({bacon: e.target.value});
             }
               
             addAction = (e) => {
-              e.preventDefault();
-              // const{Salad, Cheese, Bacon}= this.state;
-              // this.setState({
-              //   total:(parseInt(Salad)+parseInt(Cheese)+parseInt(Bacon))
-              // })
-              this.setState(() => ({
-                isButtonPressed: true
-              }))
-              this.setState({total : this.state.Salad+this.state.Cheese+this.state.Bacon});
-             let  total= (parseInt(this.state.Salad*this.state.Salad_Price)+
-                          parseInt(this.state.Cheese*this.state.Cheese_Price)+
-                          parseInt(this.state.Bacon*this.state.Bacon_Price))
-                //this.setState(() => ({totalAmount: total}));
-                this.setState({totalAmount : total}, ()=> {
-                  console.log(this.state.totalAmount,"this.state.totalAmount");
-                })
 
-                // this.setState({totalAmount:total});
-                // console.log(this.state.totalAmount);s
-              }
-           
-            // handleShowIngredients = (e) => {
-            //   console.log(this.state)
-            // }
+                e.preventDefault();
+              
+                let  total= (parseInt(this.state.salad*this.state.Salad_Price)+
+                         parseInt(this.state.cheese*this.state.Cheese_Price)+
+                         parseInt(this.state.bacon*this.state.Bacon_Price));
+                
+                this.setState({totalAmount : total}, ()=> {
+                  this.props.add_ingredients(this.state);
+                  console.log(this.state.totalAmount,"this.state.totalAmount");
+                  console.log(this.state);
+                  console.log(total)
+                });
+
+                 
+            }
           
-linkClick = () => {
-  
-}
 
     render() {
         return (
-            
+            <center>
             <div>
               <h1>Hey !! Make your Burger Here</h1> <br/> 
               <h2>Add Ingredients</h2>
@@ -95,27 +70,26 @@ linkClick = () => {
             <div>
               <h3> Please Submit your Ingredients before Proceed  </h3>
             </div> <br/>
-            <button type="submit" onClick={this.addAction} value={this.state.total}>Submit Ingredients</button>
+            <button type="submit" onClick={this.addAction} >Submit Ingredients</button>
             {
 
-              <Link  to ={
-                { pathname:'/submit', state: {totalAmount : this.state.totalAmount}} }>
+              <Link  to ='/submit' >
                   Proceed
-                {/* <button className='SubmitForm' type='submit' >Proceed</button> */}
                 </Link>
             }
-
-              
-              
-               
-               
-                {/* { <NavLink to='/submit' > 
-                  <button onClick={this.addAction} value={this.state.total}>Submit</button>
-                </NavLink> */} 
+            
         </form>
-      </div>   
+      </div>   >
+      </center>
         )
     }
+  
   }
 
-export default App;
+  const mapDispatchToProps = dispatch => {
+    return {
+      add_ingredients : (state) => dispatch(add_ingredients(state))
+    };
+  };
+
+export default connect( null, mapDispatchToProps) (App);
